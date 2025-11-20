@@ -31,12 +31,12 @@ const loginSchema = z.object({
   password: z.string().min(1, "Passord is required"),
 });
 
-type LoginFormVAlues = z.infer<typeof loginSchema>;
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
   const router = useRouter();
 
-  const form = useForm<LoginFormVAlues>({
+  const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -44,7 +44,7 @@ export function LoginForm() {
     },
   });
 
-  const onSubmit = async (values: LoginFormVAlues) => {
+  const onSubmit = async (values: LoginFormValues) => {
     await authClient.signIn.email(
       {
         email: values.email,
@@ -82,6 +82,12 @@ export function LoginForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    <Image
+                      src="/logo/github.svg"
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with GitHub
                   </Button>
                   <Button
@@ -90,6 +96,12 @@ export function LoginForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    <Image
+                      src="/logo/google.svg"
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>

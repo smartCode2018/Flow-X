@@ -28,6 +28,7 @@ import {authClient} from "@/lib/auth-client";
 
 const registerSchema = z
   .object({
+    name: z.string().min(1, "Please name is required"),
     email: z.email("Please enter a valid email address"),
     password: z.string().min(1, "Passord is required"),
     confirmPassword: z.string(),
@@ -45,6 +46,7 @@ export function RegisterForm() {
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -54,7 +56,7 @@ export function RegisterForm() {
   const onSubmit = async (values: RegisterFormValues) => {
     await authClient.signUp.email(
       {
-        name: values.email,
+        name: values.name,
         email: values.email,
         password: values.password,
         callbackURL: "/",
@@ -90,6 +92,12 @@ export function RegisterForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    <Image
+                      src="/logo/github.svg"
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with GitHub
                   </Button>
                   <Button
@@ -98,10 +106,33 @@ export function RegisterForm() {
                     type="button"
                     disabled={isPending}
                   >
+                    <Image
+                      src="/logo/google.svg"
+                      alt="GitHub"
+                      width={20}
+                      height={20}
+                    />
                     Continue with Google
                   </Button>
                 </div>
                 <div className="grid gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="name"
+                            placeholder="John Doe"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="email"
