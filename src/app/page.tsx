@@ -14,6 +14,10 @@ const page = () => {
       onSuccess: () => {
         toast.success("Job queued");
       },
+
+      onError: (err) => {
+        toast.error(`Error: ${err.message}`);
+      },
     })
   );
 
